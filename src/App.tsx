@@ -1,61 +1,35 @@
-import { useEffect } from 'react';
-import studentApi from './api/studentApi';
+import { NotFound, PrivateRoute } from 'components/Common';
+import AdminLayout from 'components/Layout/Admin';
+import RegisterPage from 'features/auth/pages/RegisterPage';
+import { Route, Routes } from 'react-router-dom';
+import LoginPage from './features/auth/pages/LoginPage';
+import { LOGIN_PATH, REGISTER_PATH, ADMIN_PATH } from './utils/index';
+
 import './App.css';
-import { Counter } from './features/counter/Counter';
-import logo from './logo.svg';
 
 function App() {
-    useEffect(() => {
-        studentApi.getById('sktwi1cgkkuif36ff').then((response) => console.log(response));
-    }, []);
-
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <Counter />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <span>
-                    <span>Learn </span>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        React
-                    </a>
-                    <span>, </span>
-                    <a
-                        className="App-link"
-                        href="https://redux.js.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Redux
-                    </a>
-                    <span>, </span>
-                    <a
-                        className="App-link"
-                        href="https://redux-toolkit.js.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Redux Toolkit
-                    </a>
-                    ,<span> and </span>
-                    <a
-                        className="App-link"
-                        href="https://react-redux.js.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        React Redux
-                    </a>
-                </span>
-            </header>
+        <div>
+            <Routes>
+                {/* Home Page */}
+                {/* <Route path={HOME_PATH} element={} /> */}
+                {/* Login Page */}
+                <Route path={LOGIN_PATH} element={<LoginPage />} />
+                {/* Register Page */}
+                <Route path={REGISTER_PATH} element={<RegisterPage />} />
+                {/* Admin Layout */}
+                <Route
+                    path={ADMIN_PATH}
+                    element={
+                        <PrivateRoute>
+                            <AdminLayout />
+                        </PrivateRoute>
+                    }
+                />
+
+                {/* Not found */}
+                <Route path="*" element={<NotFound />} />
+            </Routes>
         </div>
     );
 }

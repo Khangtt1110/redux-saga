@@ -11,7 +11,7 @@ const studentApi = {
 
     getById(id: string): Promise<ListResponse<Student>> {
         //set get by id url
-        const url = `/students/${id}`;
+        const url = `/students/${id}`; 
         console.log('ID to get: ', id);
         return axiosClient.get(url);
     },
