@@ -1,0 +1,5 @@
+@baseUrl = https://js-post-api.herokuapp.com/api
+
+# Students api
+# get all student
+GET {{baseUrl}}/students
