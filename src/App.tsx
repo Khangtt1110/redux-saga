@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { useEffect } from 'react';
+import studentApi from './api/studentApi';
 import './App.css';
-import cityApi from './api/cityApi';
+import { Counter } from './features/counter/Counter';
+import logo from './logo.svg';
 
 function App() {
     useEffect(() => {
-        cityApi.getAll().then((response) => console.log(response));
+        studentApi.getById('sktwi1cgkkuif36ff').then((response) => console.log(response));
     }, []);
-    
+
     return (
         <div className="App">
             <header className="App-header">

@@ -2,4 +2,4 @@
 
 # Cities api
 # get all cities
-GET {{baseUrl}}/cities
+GET {{baseUrl}}/cities?_limit=10&_page=1
