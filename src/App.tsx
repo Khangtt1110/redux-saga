@@ -11,27 +11,25 @@ function App() {
     // check login
     const isLoggedIn = Boolean(localStorage.getItem('access_token'));
     return (
-        <div>
-            <Routes>
-                {/* Home Page */}
-                {/* <Route path={HOME_PATH} element={} /> */}
-                {/* Login Page */}
-                <Route path={LOGIN_PATH} element={<LoginPage />} />
-                {/* Register Page */}
-                <Route path={REGISTER_PATH} element={<RegisterPage />} />
-                {/* Private Route */}
-                {isLoggedIn ? (
-                    <>
-                        <Route path={ADMIN_PATH} element={<AdminLayout />} />
-                        <Route path={TEST_PATH} element={<RegisterPage />} />
-                    </>
-                ) : (
-                    <Route path="*" element={<LoginPage />} />
-                )}
-                {/* Not found */}
-                {/* <Route path="*" element={<NotFound />} /> */}
-            </Routes>
-        </div>
+        <Routes>
+            {/* Home Page */}
+            {/* <Route path={HOME_PATH} element={} /> */}
+            {/* Login Page */}
+            <Route path={LOGIN_PATH} element={<LoginPage />} />
+            {/* Register Page */}
+            <Route path={REGISTER_PATH} element={<RegisterPage />} />
+            {/* Private Route */}
+            {isLoggedIn ? (
+                <>
+                    <Route path={ADMIN_PATH} element={<AdminLayout />} />
+                    <Route path={TEST_PATH} element={<RegisterPage />} />
+                </>
+            ) : (
+                <Route path="*" element={<LoginPage />} />
+            )}
+            {/* Not found */}
+            {/* <Route path="*" element={<NotFound />} /> */}
+        </Routes>
     );
 }
 
