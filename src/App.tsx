@@ -3,10 +3,12 @@ import AdminLayout from 'components/Layout/Admin';
 import RegisterPage from 'features/auth/pages/RegisterPage';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import LoginPage from './features/auth/pages/LoginPage';
-import { ADMIN_PATH, LOGIN_PATH, REGISTER_PATH, TEST_PATH } from './utils/index';
+import { ADMIN_PATH, LOGIN_PATH, REGISTER_PATH, TEST_PATH, TOKEN } from './utils/index';
 
 import { useEffect, useState } from 'react';
 import './App.css';
+import Home from 'components/Layout/Home';
+import { HOME_PATH } from './utils/path';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,13 +16,13 @@ function App() {
     const location = useLocation();
     // check login
     useEffect(() => {
-        setIsLoggedIn(Boolean(localStorage.getItem('access_token')));
+        setIsLoggedIn(Boolean(localStorage.getItem(TOKEN)));
     }, [isLoggedIn, location]);
 
     return (
         <Routes>
             {/* Home Page */}
-            {/* <Route path={HOME_PATH} element={} /> */}
+            <Route path={HOME_PATH} element={<Home />} />
             {/* Private Route */}
             {isLoggedIn ? (
                 <>
@@ -33,7 +35,7 @@ function App() {
                 <>
                     <Route path={REGISTER_PATH} element={<RegisterPage />} />
                     <Route path={LOGIN_PATH} element={<LoginPage />} />
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="*" element={<Home />} />
                 </>
             )}
         </Routes>

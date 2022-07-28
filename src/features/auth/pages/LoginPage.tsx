@@ -11,10 +11,13 @@ import {
 } from '@material-ui/core';
 // Form and validation
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useState } from 'react';
-import * as Yup from 'yup';
+import { User } from 'models';
 import { Link, useNavigate } from 'react-router-dom';
-import { ADMIN_PATH, REGISTER_PATH } from '../../../utils/index';
+import * as Yup from 'yup';
+import { useAppDispatch } from '../../../app/hooks';
+import { REGISTER_PATH } from '../../../utils/index';
+import { authActions } from '../authSlice';
+import { ADMIN_PATH } from '../../../utils/path';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh',
-        minWidth: '40%',
     },
     title: {
         textAlign: 'center',
@@ -50,19 +52,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface user {
-    username: string;
-    password: string;
-    email?: string;
-}
-
 export default function LoginPage() {
-    const classes = useStyles();
-    const [notification, setNotification] = useState(false);
     const navigate = useNavigate();
+    const classes = useStyles();
+    // const [notification, setNotification] = useState(false);
+    const dispatch = useAppDispatch();
 
     // Setup initial value of input field
-    const initialValue: user = {
+    const initialValue: User = {
+        id: '',
         username: '',
         password: '',
     };
@@ -73,7 +71,7 @@ export default function LoginPage() {
         password: Yup.string().required('Required').min(8, 'Must be at least 8 characters'),
     });
     // handle submit
-    const handleSubmitLogin = (values: user, resetForm: any) => {
+    const handleSubmitLogin = (values: User, resetForm: any) => {
         // const data = JSON.parse(localStorage.getItem('user') || '');
         // if (data.username === values.username && data.password === values.password) {
         //     navigate(ADMIN_PATH);
@@ -81,7 +79,12 @@ export default function LoginPage() {
         //     resetForm();
         //     setNotification(true);
         // }
-        localStorage.setItem('access_token', values.username);
+        dispatch(
+            authActions.login({
+                username: values.username,
+                password: values.password,
+            })
+        );
         navigate(ADMIN_PATH);
     };
     return (
@@ -104,14 +107,14 @@ export default function LoginPage() {
                                     <Form className="form">
                                         <FormGroup>
                                             {/* show notification */}
-                                            {notification && (
+                                            {/* {notification && (
                                                 <Typography
                                                     className="fail-signification"
                                                     component="h5"
                                                 >
                                                     Login fail
                                                 </Typography>
-                                            )}
+                                            )} */}
                                             {/* Username input */}
                                             <Field
                                                 name="username"

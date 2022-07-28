@@ -5,8 +5,11 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import { store } from './app/store';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { ConnectedRouter } from 'connected-react-router';
+
+import './index.css';
+import { history } from 'utils/history';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -15,9 +18,11 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <Router>
-                <CssBaseline />
                 <App />
+                <CssBaseline />
             </Router>
+            {/* <ConnectedRouter history={history}> */}
+            {/* </ConnectedRouter> */}
         </Provider>
     </React.StrictMode>
 );
