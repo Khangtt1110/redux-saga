@@ -81,6 +81,7 @@ export default function LoginPage() {
         //     resetForm();
         //     setNotification(true);
         // }
+        localStorage.setItem('access_token', values.username);
         navigate(ADMIN_PATH);
     };
     return (
