@@ -3,11 +3,13 @@ import AdminLayout from 'components/Layout/Admin';
 import RegisterPage from 'features/auth/pages/RegisterPage';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from './features/auth/pages/LoginPage';
-import { LOGIN_PATH, REGISTER_PATH, ADMIN_PATH } from './utils/index';
+import { LOGIN_PATH, REGISTER_PATH, ADMIN_PATH, TEST_PATH } from './utils/index';
 
 import './App.css';
 
 function App() {
+    // check login
+    const isLoggedIn = Boolean(localStorage.getItem('access_token'));
     return (
         <div>
             <Routes>
@@ -17,18 +19,17 @@ function App() {
                 <Route path={LOGIN_PATH} element={<LoginPage />} />
                 {/* Register Page */}
                 <Route path={REGISTER_PATH} element={<RegisterPage />} />
-                {/* Admin Layout */}
-                <Route
-                    path={ADMIN_PATH}
-                    element={
-                        <PrivateRoute>
-                            <AdminLayout />
-                        </PrivateRoute>
-                    }
-                />
-
+                {/* Private Route */}
+                {isLoggedIn ? (
+                    <>
+                        <Route path={ADMIN_PATH} element={<AdminLayout />} />
+                        <Route path={TEST_PATH} element={<RegisterPage />} />
+                    </>
+                ) : (
+                    <Route path="*" element={<LoginPage />} />
+                )}
                 {/* Not found */}
-                <Route path="*" element={<NotFound />} />
+                {/* <Route path="*" element={<NotFound />} /> */}
             </Routes>
         </div>
     );
