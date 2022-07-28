@@ -85,7 +85,7 @@ export default function LoginPage() {
                 password: values.password,
             })
         );
-        navigate(ADMIN_PATH);
+        // navigate(ADMIN_PATH);
     };
     return (
         <div className={classes.root}>

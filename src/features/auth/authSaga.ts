@@ -1,11 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { push } from 'connected-react-router';
-import { call, delay, fork, put, take } from 'redux-saga/effects';
-import { TOKEN } from 'utils';
+import { call, fork, put, take } from 'redux-saga/effects';
+import { history, TOKEN } from 'utils';
 import { ADMIN_PATH, LOGIN_PATH } from '../../utils/path';
 import { authActions, LoginUser } from './authSlice';
-import { LOCATION_CHANGE } from 'redux-first-history';
-import { takeEvery } from 'redux-saga/effects';
+
+function forwardTo(location: string) {
+    history.push(location);
+}
 
 function* handleLogin(payload: LoginUser) {
     try {
@@ -19,7 +21,7 @@ function* handleLogin(payload: LoginUser) {
             })
         );
 
-        yield put(push(ADMIN_PATH));
+        yield call(forwardTo, ADMIN_PATH);
     } catch (error) {
         // yield put(authActions.loginFail(error));
     }
@@ -36,8 +38,6 @@ function* watchLoginFlow() {
         const isLoggedIn = Boolean(localStorage.getItem(TOKEN));
         if (!isLoggedIn) {
             const action: PayloadAction<LoginUser> = yield take(authActions.login.type);
-            console.log('waitttt');
-
             yield fork(handleLogin, action.payload);
         }
 
